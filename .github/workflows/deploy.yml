@@ -102,7 +102,7 @@ jobs:
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
         terraform_wrapper: false
-        terraform_version: 0.12.31
+        terraform_version: 1.5.3
       env:
         TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
       if: ${{ env.TF_API_TOKEN }}
