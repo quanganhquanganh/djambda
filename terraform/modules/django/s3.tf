@@ -38,6 +38,25 @@ module "staticfiles" {
   cors_expose_headers      = ["ETag"]
 }
 
+resource "aws_s3_bucket_policy" "bucket_policy" {
+  bucket = module.staticfiles.s3_bucket
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "s3:GetObject"
+        ]
+        Effect   = "Allow"
+        Principal = "*"
+        Resource = [
+          "${module.staticfiles.s3_bucket_arn}/*"
+        ]
+      }
+    ]
+  })
+}
+
 module "s3_user_staticfiles" {
   source       = "git::https://github.com/cloudposse/terraform-aws-iam-s3-user.git"
   namespace    = var.lambda_function_name
