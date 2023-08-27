@@ -11,4 +11,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
     - uses: pre-commit/action@v2.0.0
+      with:
+        pre-commit-hooks: "['black', 'flake8', 'isort', 'mypy']"
+        default-branch: master
+        additional_dependencies: "['black==19.10b0', 'flake8==3.7.9', 'isort==4.3.21', 'mypy==0.770']"
+        additional_arguments: "--verbose"
