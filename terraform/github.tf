@@ -1,4 +1,5 @@
 data "github_actions_public_key" "djambda" {
+  count      = var.github_repository != "" ? 1 : 0
   repository = var.github_repository
 }
 
