@@ -18,7 +18,7 @@ module "postgresql_security_group" {
 locals {
   port              = "5432"
   engine            = "postgres"
-  engine_version    = "14.0"
+  engine_version    = "14.3"
   instance_class    = "db.t2.micro"
   allocated_storage = 5
 }
