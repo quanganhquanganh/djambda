@@ -60,6 +60,8 @@ module "db" {
   # DB subnet group
   subnet_ids = module.vpc.database_subnets
 
+  storage_encrypted = false
+
   create_db_option_group    = false
   create_db_parameter_group = false
 }
