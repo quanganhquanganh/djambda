@@ -3,7 +3,7 @@ terraform {
     organization = "djambda"
 
     workspaces {
-      name = "test"
+      name = "second-test"
     }
   }
 }
