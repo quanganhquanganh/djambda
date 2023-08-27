@@ -27,13 +27,12 @@ data "aws_security_group" "default" {
 
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
-  version = "~> v2.0"
 
   name = module.vpc_label.id
 
   cidr = "20.10.0.0/16"
 
-  azs                 = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
+  azs                 = ["us-east-1a", "us-east-1b", "us-east-1c"]
   private_subnets     = ["20.10.1.0/24", "20.10.2.0/24", "20.10.3.0/24"]
   database_subnets    = ["20.10.21.0/24", "20.10.22.0/24", "20.10.23.0/24"]
 
