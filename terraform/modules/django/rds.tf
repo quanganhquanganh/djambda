@@ -58,6 +58,7 @@ module "db" {
   backup_retention_period = 1
 
   # DB subnet group
+  db_subnet_group_name = module.vpc.database_subnet_group_name
   subnet_ids = module.vpc.database_subnets
 
   storage_encrypted = false
