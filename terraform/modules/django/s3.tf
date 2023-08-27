@@ -1,5 +1,5 @@
 module "s3_bucket_app" {
-  source                 = "git::https://github.com/cloudposse/terraform-aws-s3-bucket.git?ref=tags/0.8.0"
+  source                 = "git::https://github.com/cloudposse/terraform-aws-s3-bucket.git"
   force_destroy          = true
   user_enabled           = true
   versioning_enabled     = true
@@ -26,7 +26,8 @@ locals {
 }
 
 module "staticfiles" {
-  source                   = "git::https://github.com/cloudposse/terraform-aws-cloudfront-s3-cdn.git?ref=tags/0.23.1"
+  # Get the latest version
+  source                   = "git::https://github.com/cloudposse/terraform-aws-cloudfront-s3-cdn.git"
   origin_force_destroy     = true
   namespace                = var.lambda_function_name
   stage                    = var.stage
@@ -38,7 +39,7 @@ module "staticfiles" {
 }
 
 module "s3_user_staticfiles" {
-  source       = "git::https://github.com/cloudposse/terraform-aws-iam-s3-user.git?ref=tags/0.5.0"
+  source       = "git::https://github.com/cloudposse/terraform-aws-iam-s3-user.git"
   namespace    = var.lambda_function_name
   stage        = var.stage
   name         = "s3_user_staticfiles"

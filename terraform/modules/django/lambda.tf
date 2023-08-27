@@ -108,7 +108,7 @@ resource "aws_lambda_function" "function" {
 
   vpc_config {
     subnet_ids = module.vpc.private_subnets
-    security_group_ids = [data.aws_security_group.default.id, module.postgresql_security_group.this_security_group_id]
+    security_group_ids = [data.aws_security_group.default.id, module.postgresql_security_group.security_group_id]
   }
 
   environment {
@@ -116,7 +116,7 @@ resource "aws_lambda_function" "function" {
       {
         ALLOWED_HOSTS = "*"
         DEBUG = "False"
-        DATABASE_URL = "postgres://${module.db.this_db_instance_username}:${module.db.this_db_instance_password}@${module.db.this_db_instance_address}:${module.db.this_db_instance_port}/${var.lambda_function_name}_${keys(local.dist_manifest)[count.index]}"
+        DATABASE_URL = "postgres://${module.db.db_instance_username}:${random_password.password.result}@${module.db.db_instance_address}:${module.db.db_instance_port}/${var.lambda_function_name}_${keys(local.dist_manifest)[count.index]}"
         FORCE_SCRIPT_NAME = "/${keys(local.dist_manifest)[count.index]}/"
         DJANGO_SUPERUSER_PASSWORD=random_password.password.result
         ENABLE_MANIFEST_STORAGE = "True"

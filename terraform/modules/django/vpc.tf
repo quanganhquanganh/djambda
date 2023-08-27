@@ -1,5 +1,5 @@
 module "vpc_label" {
-  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=0.16.0"
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git"
   namespace  = var.lambda_function_name
   stage      = var.stage
   name       = "vpc"
@@ -7,15 +7,12 @@ module "vpc_label" {
 
 module "sg" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 3.0"
 
   vpc_id = module.vpc.vpc_id
   name   = module.vpc_label.id
 
   egress_ipv6_cidr_blocks = []
   egress_cidr_blocks = []
-
-  egress_prefix_list_ids = [module.vpc.vpc_endpoint_ses_id]
 
   tags = module.vpc_label.tags
 }
@@ -27,6 +24,7 @@ data "aws_security_group" "default" {
 
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
+  version = "~> 5.0"
 
   name = module.vpc_label.id
 
@@ -40,22 +38,6 @@ module "vpc" {
 
   enable_dns_hostnames = true
   enable_dns_support   = true
-
-  # VPC endpoint for S3
-  enable_s3_endpoint = var.enable_s3_endpoint
-
-  # VPC endpoint for DynamoDB
-  enable_dynamodb_endpoint = var.enable_dynamodb_endpoint
-
-  # VPC endpoint for SES
-  enable_ses_endpoint = var.enable_ses_endpoint
-  ses_endpoint_private_dns_enabled = var.enable_ses_endpoint
-  ses_endpoint_security_group_ids  = var.enable_ses_endpoint ? [data.aws_security_group.default.id] : []
-
-  # VPC endpoint for SQS
-  # enable_sqs_endpoint              = true
-  # sqs_endpoint_private_dns_enabled = true
-  # sqs_endpoint_security_group_ids  = [module.prod_sg.this_security_group_id]
 
   tags   = module.vpc_label.tags
 }
