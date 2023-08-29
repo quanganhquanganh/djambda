@@ -26,7 +26,7 @@ locals {
 }
 
 module "staticfiles" {
-  source                   = "git::https://github.com/cloudposse/terraform-aws-cloudfront-s3-cdn.git?ref=tags/0.23.1"
+  source                   = "git::https://github.com/cloudposse/terraform-aws-cloudfront-s3-cdn.git?ref=tags/0.92.0"
   origin_force_destroy     = true
   namespace                = var.lambda_function_name
   stage                    = var.stage
