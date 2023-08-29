@@ -26,8 +26,7 @@ locals {
 }
 
 module "staticfiles" {
-  # Get the latest version
-  source                   = "git::https://github.com/cloudposse/terraform-aws-cloudfront-s3-cdn.git"
+  source                   = "git::https://github.com/cloudposse/terraform-aws-cloudfront-s3-cdn.git?ref=tags/0.23.1"
   origin_force_destroy     = true
   namespace                = var.lambda_function_name
   stage                    = var.stage
@@ -36,25 +35,6 @@ module "staticfiles" {
   cors_allowed_methods     = ["GET", "HEAD", "PUT"]
   cors_allowed_origins     = ["*"]
   cors_expose_headers      = ["ETag"]
-}
-
-resource "aws_s3_bucket_policy" "bucket_policy" {
-  bucket = module.staticfiles.s3_bucket
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = [
-          "s3:GetObject"
-        ]
-        Effect   = "Allow"
-        Principal = "*"
-        Resource = [
-          "${module.staticfiles.s3_bucket_arn}/*"
-        ]
-      }
-    ]
-  })
 }
 
 module "s3_user_staticfiles" {
