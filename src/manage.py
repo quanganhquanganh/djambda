@@ -3,6 +3,7 @@
 import os
 import sys
 
+# Testing
 
 def main():
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "djambda.settings")
