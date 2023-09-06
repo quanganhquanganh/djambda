@@ -17,6 +17,22 @@ resource "aws_iam_role" "lambda" {
   assume_role_policy = data.aws_iam_policy_document.lambda.json
 }
 
+module "lambda_security_group" {
+  source  = "terraform-aws-modules/security-group/aws"
+  version = "~> 5.0"
+
+  name = "lambda_sg"
+  vpc_id = module.vpc.vpc_id
+
+  computed_egress_with_source_security_group_id = [
+    {
+      rule                     = "postgresql-tcp"
+      source_security_group_id = module.postgresql_security_group.security_group_id
+    }
+  ]
+  number_of_computed_egress_with_source_security_group_id = 1
+}
+
 /* Define IAM permissions for the Lambda functions. */
 
 data "aws_iam_policy_document" "lambda_basic_execution" {
@@ -108,7 +124,7 @@ resource "aws_lambda_function" "function" {
 
   vpc_config {
     subnet_ids = module.vpc.private_subnets
-    security_group_ids = [data.aws_security_group.default.id, module.postgresql_security_group.security_group_id]
+    security_group_ids = [data.aws_security_group.default.id, module.lambda_security_group.security_group_id, module.postgresql_security_group.security_group_id]
   }
 
   environment {
