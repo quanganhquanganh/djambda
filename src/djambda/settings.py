@@ -118,6 +118,8 @@ STATIC_URL = env.str("STATIC_URL", default="/static/")
 
 STATIC_ROOT = env.str("STATIC_ROOT", default=None)
 
+AWS_DEFAULT_ACL = env.str("AWS_DEFAULT_ACL", "public-read")
+
 if env.bool("ENABLE_S3_STORAGE", default=False):
     # https://github.com/etianen/django-s3-storage
     STATICFILES_STORAGE = "django_s3_storage.storage.ManifestStaticS3Storage"
