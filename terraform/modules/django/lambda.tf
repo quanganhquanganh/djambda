@@ -130,16 +130,7 @@ resource "aws_lambda_function" "function" {
 
   provisioner "local-exec" {
     when    = destroy
-    # Install python and run "./script/invoke_dropdb.py ${self.function_name} ${self.function_name}"
-    command = <<EOF
-      set -e
-      set -x
-      sudo apt-get update
-      sudo apt-get install -y python3 python3-pip
-      sudo ln -s /usr/bin/python3 /usr/bin/python
-      ./script/invoke_dropdb.py ${self.function_name} ${self.function_name}
-    EOF
-
+    command = "./script/invoke_dropdb.py ${self.function_name} ${self.function_name}"
     working_dir = path.module
   }
 }
