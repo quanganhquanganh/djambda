@@ -11,7 +11,6 @@ module "postgresql_security_group" {
   ingress_cidr_blocks = ["0.0.0.0/0"]
 }
 
-
 ####################################
 # Variables common to both instnaces
 ####################################
@@ -43,6 +42,7 @@ module "db" {
   instance_class     = local.instance_class
   create_db_instance = var.create_db_instance
   allocated_storage  = local.allocated_storage
+  manage_master_user_password = false
 
   db_name  = "lambda"
   username = "lambda"
