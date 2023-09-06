@@ -1,7 +1,7 @@
 module "django" {
   source                 = "./modules/django"
   lambda_function_name   = "djambda"
-  lambda_handler         = "djambda.lgi.application"
+  lambda_handler         = "locallibrary.lgi.application"
   stage                  = "dev"
   aws_region             = var.aws_region
   create_lambda_function = true
