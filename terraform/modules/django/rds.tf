@@ -18,8 +18,8 @@ module "postgresql_security_group" {
 locals {
   port              = "5432"
   engine            = "postgres"
-  engine_version    = "12"
-  instance_class    = "db.t2.micro"
+  engine_version    = "15"
+  instance_class    = "db.t3.micro"
   allocated_storage = 5
 }
 
@@ -44,7 +44,7 @@ module "db" {
   create_db_instance = var.create_db_instance
   allocated_storage  = local.allocated_storage
 
-  db_name     = "lambda"
+  db_name  = "lambda"
   username = "lambda"
   password = random_password.password.result
   port     = "5432"
